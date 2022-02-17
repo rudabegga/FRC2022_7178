@@ -27,6 +27,7 @@ public class AutoShooter extends CommandBase{
     public AutoShooter(Indexer indexerSubsystem, Shooter shooterSubsystem){
         m_indexerSubsystem = indexerSubsystem;
         m_shooterSubsystem = shooterSubsystem;
+        addRequirements(m_indexerSubsystem,m_shooterSubsystem);
     }
 
     @Override

@@ -8,6 +8,7 @@ public class StopIntake extends CommandBase{
     
     public StopIntake(Intake intakeSubsystem){
         m_intakeSubsystem = intakeSubsystem;
+        addRequirements(m_intakeSubsystem);
     }
 
     @Override

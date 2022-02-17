@@ -8,6 +8,7 @@ public class StopShooter extends CommandBase{
 
     public StopShooter(Shooter shooterSubsystem){
         m_shooterSubsystem = shooterSubsystem;
+        addRequirements(m_shooterSubsystem);
     }
 
     @Override

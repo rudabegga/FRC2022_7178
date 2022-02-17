@@ -8,6 +8,7 @@ public class StopIndexer extends CommandBase{
 
     public StopIndexer(Indexer indexerSubsystem){
         m_indexerSubsystem = indexerSubsystem;
+        addRequirements(m_indexerSubsystem);
     }
 
     @Override

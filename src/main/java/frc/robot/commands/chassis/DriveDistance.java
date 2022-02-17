@@ -13,6 +13,7 @@ public class DriveDistance extends CommandBase{
         m_distance = inches;
         m_speed = speed;
         m_drive = subsystem;
+        addRequirements(m_drive);
     }
 
     @Override

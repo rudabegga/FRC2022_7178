@@ -8,6 +8,7 @@ public class StopTraverse extends CommandBase{
 
     public StopTraverse(Traverse traverseSubsystem){
         m_traverseSubsystem = traverseSubsystem;
+        addRequirements(m_traverseSubsystem);
     }
 
     @Override
