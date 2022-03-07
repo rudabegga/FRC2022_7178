@@ -40,6 +40,7 @@ public class AutoShooter extends CommandBase{
             SmartDashboard.putString("Shooter State","INDEXING");
         }
         m_sysTime = System.currentTimeMillis();
+        m_complete = false;
     }
 
     @Override

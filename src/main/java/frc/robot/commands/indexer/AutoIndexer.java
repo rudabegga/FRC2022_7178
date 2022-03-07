@@ -51,6 +51,7 @@ public class AutoIndexer extends CommandBase {
             m_loadingStage = IndexerStage.EMPTY;
             SmartDashboard.putString("Index State","EMPTY");
         }
+        m_complete = false;
     }
 
     @Override

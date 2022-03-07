@@ -14,15 +14,18 @@ public final class Constants {
         public static final int kLeftRearPort = 4;
 
         public static final int kCurrentLimit = 40; // 40A current limit for motors eventhough it could be higher but not higher than 50A as the rating is 40A @80%
+
+        public static final double kAutoRotationSpeed = 0.2; // speed to rotate for auto aim
     }
 
     public static final class IntakeConstants{
-        public static final int kIntakeMotorPort = 5;
+        public static final int kIntakeMotorPort = 10;
         public static final double kIntakeMotorSpeed = 0.5;
+        public static final int kIntakeDeployPort = 0;
     }
 
     public static final class TraverseConstants{
-        public static final int kTraverseMotorPort = 6;
+        public static final int kTraverseMotorPort = 5;
         public static final double kTraverseMotorSpeed = 0.5;
         public static final int kTraverseSensorPort = 0;
     }
@@ -34,11 +37,11 @@ public final class Constants {
     }
 
     public static final class ShooterConstants{
-        public static final int kUpperShooterMotorPort = 8;
-        public static final double kUpperShooterMotorSpeed = 0.5;
-        public static final int kLowerShooterMotorPort = 9;
-        public static final double kLowerShooterMotorSpeed = 0.5;
-        public static final int kAssistMotorPort = 10;
+        public static final int kUpperShooterMotorPort = 13;
+        public static final double kUpperShooterMotorSpeed = 0.37;
+        public static final int kLowerShooterMotorPort = 14;
+        public static final double kLowerShooterMotorSpeed = 0.53;
+        public static final int kAssistMotorPort = 8;
         public static final double kAssistMotorSpeed = 0.5;
 
         public static final double kUpperShooterSpeed = 2000;
@@ -46,6 +49,25 @@ public final class Constants {
         public static final long kMaxIndexTimeMS = 1000; // time to determine we have no more balls in the indexer
         public static final long kMaxRampTimeMS = 250; // time to deterine we have a stable speed
         public static final long kMaxReleaseTimeMS = 100; // time to recoginze we released a ball from the indexer
+    }
+
+    public static final class HangConstants{
+        public static final int kLeftHangMotorPort = 15;
+        public static final int kRightHangMotorPort = 15;
+        public static final double kHangMotorSpeed = 1.0;
+        public static final int kLeftDeployPort = 1;
+        public static final int kRightDeployPort = 2;
+        public static final int kCurrentLimit = 40; // 40A current limit for motors eventhough it could be higher but not higher than 50A as the rating is 40A @80%
+    }
+
+    public static final class LEDConstants{
+        public static final int kLEDCount = 100;
+        public static final int kLEDPWMPort = 0;
+    }
+
+    public static final class VisionConstants{
+        public static final double kInRangeDeg = 5.0;  // if within 5 degrees of center than call it good
+
     }
 
 }
