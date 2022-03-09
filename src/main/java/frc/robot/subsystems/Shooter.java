@@ -34,8 +34,9 @@ public class Shooter extends SubsystemBase{
         m_lowerShooterMotor.configAllSettings(m_configs,20);
         m_upperShooterMotor.setNeutralMode(NeutralMode.Coast);
         m_lowerShooterMotor.setNeutralMode(NeutralMode.Coast);
-        m_lowerShooterMotor.setInverted(true); // invert the lower one so always positive value
-
+        m_lowerShooterMotor.setInverted(false); // invert the lower one so always positive value
+        m_upperShooterMotor.setInverted(true); // invert the lower one so always positive value
+        m_assistMotor.setInverted(true);
         m_assistMotor.setNeutralMode(NeutralMode.Brake);
     }
 

@@ -14,7 +14,9 @@ public class Indexer extends SubsystemBase{
     private final DigitalInput m_indexerSensor = new DigitalInput(IndexerConstants.kIndexerSensorPort);
 
     public Indexer(){
+        m_indexerMotor.setInverted(true);
         m_indexerMotor.setNeutralMode(NeutralMode.Brake);
+
     }
 
     public void indexerOn(){

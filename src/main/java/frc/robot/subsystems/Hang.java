@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CompressorConstants;
 import frc.robot.Constants.HangConstants;
 
 public class Hang extends SubsystemBase{
     private final CANSparkMax m_leftHang = new CANSparkMax(HangConstants.kLeftHangMotorPort, MotorType.kBrushless);
     private final CANSparkMax m_rightHang = new CANSparkMax(HangConstants.kRightHangMotorPort, MotorType.kBrushless);
-    private final Solenoid m_leftDeploy = new Solenoid(PneumaticsModuleType.REVPH,HangConstants.kLeftDeployPort);
-    private final Solenoid m_rightDeploy = new Solenoid(PneumaticsModuleType.REVPH,HangConstants.kRightDeployPort);
+    private final Solenoid m_leftDeploy = new Solenoid(CompressorConstants.kModuleID,PneumaticsModuleType.REVPH,HangConstants.kLeftDeployPort);
+    private final Solenoid m_rightDeploy = new Solenoid(CompressorConstants.kModuleID,PneumaticsModuleType.REVPH,HangConstants.kRightDeployPort);
 
     private RelativeEncoder m_leftHangEncoder = m_leftHang.getEncoder();
     private RelativeEncoder m_rightHangEncoder = m_rightHang.getEncoder();

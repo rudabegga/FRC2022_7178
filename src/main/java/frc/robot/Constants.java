@@ -20,40 +20,40 @@ public final class Constants {
 
     public static final class IntakeConstants{
         public static final int kIntakeMotorPort = 10;
-        public static final double kIntakeMotorSpeed = 0.5;
+        public static final double kIntakeMotorSpeed = 0.75;
         public static final int kIntakeDeployPort = 0;
     }
 
     public static final class TraverseConstants{
         public static final int kTraverseMotorPort = 5;
-        public static final double kTraverseMotorSpeed = 0.5;
-        public static final int kTraverseSensorPort = 0;
+        public static final double kTraverseMotorSpeed = 0.75;
+        public static final int kTraverseSensorPort = 1;
     }
 
     public static final class IndexerConstants{
         public static final int kIndexerMotorPort = 7;
         public static final double kIndexerMotorSpeed = 0.5;
-        public static final int kIndexerSensorPort = 1;
+        public static final int kIndexerSensorPort = 0;
     }
 
     public static final class ShooterConstants{
         public static final int kUpperShooterMotorPort = 13;
-        public static final double kUpperShooterMotorSpeed = 0.37;
+        public static final double kUpperShooterMotorSpeed = 0.17;
         public static final int kLowerShooterMotorPort = 14;
-        public static final double kLowerShooterMotorSpeed = 0.53;
+        public static final double kLowerShooterMotorSpeed = 0.90;
         public static final int kAssistMotorPort = 8;
-        public static final double kAssistMotorSpeed = 0.5;
+        public static final double kAssistMotorSpeed = 0.8;
 
         public static final double kUpperShooterSpeed = 2000;
-        public static final double kLowerShooterSpeed = 1000;
-        public static final long kMaxIndexTimeMS = 1000; // time to determine we have no more balls in the indexer
-        public static final long kMaxRampTimeMS = 250; // time to deterine we have a stable speed
+        public static final double kLowerShooterSpeed = 17000;
+        public static final long kMaxIndexTimeMS = 2000; // time to determine we have no more balls in the indexer
+        public static final long kMaxRampTimeMS = 2000; // time to deterine we have a stable speed
         public static final long kMaxReleaseTimeMS = 100; // time to recoginze we released a ball from the indexer
     }
 
     public static final class HangConstants{
         public static final int kLeftHangMotorPort = 15;
-        public static final int kRightHangMotorPort = 15;
+        public static final int kRightHangMotorPort = 16;
         public static final double kHangMotorSpeed = 1.0;
         public static final int kLeftDeployPort = 1;
         public static final int kRightDeployPort = 2;
@@ -68,6 +68,10 @@ public final class Constants {
     public static final class VisionConstants{
         public static final double kInRangeDeg = 5.0;  // if within 5 degrees of center than call it good
 
+    }
+
+    public static final class CompressorConstants{
+        public static final int kModuleID = 17;
     }
 
 }

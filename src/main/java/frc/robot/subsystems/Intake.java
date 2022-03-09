@@ -9,12 +9,13 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CompressorConstants;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase{
     private final WPI_TalonSRX m_intakeMotor = new WPI_TalonSRX(IntakeConstants.kIntakeMotorPort);
-    private final Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
-    private final Solenoid m_intakeDeploy = new Solenoid(PneumaticsModuleType.REVPH,0);
+    private final Compressor m_compressor = new Compressor(CompressorConstants.kModuleID,PneumaticsModuleType.REVPH);
+    private final Solenoid m_intakeDeploy = new Solenoid(CompressorConstants.kModuleID,PneumaticsModuleType.REVPH,0);
 
     public Intake(){
         m_intakeMotor.setNeutralMode(NeutralMode.Brake);
@@ -22,6 +23,7 @@ public class Intake extends SubsystemBase{
 
     public void intakeOn(){
         m_intakeMotor.set(ControlMode.PercentOutput,IntakeConstants.kIntakeMotorSpeed);
+        m_intakeDeploy.set(true);
     }
 
     public void intakeOff(){

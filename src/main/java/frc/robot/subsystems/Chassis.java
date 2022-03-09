@@ -37,11 +37,18 @@ public class Chassis extends SubsystemBase {
         m_rightFront.setIdleMode(IdleMode.kCoast);
         m_rightRear.setIdleMode(IdleMode.kCoast);
         m_leftRear.setIdleMode(IdleMode.kCoast);
+        m_leftFront.setInverted(true);
+        m_leftRear.setInverted(true);
+        m_rightFront.setInverted(true);
+        m_rightRear.setInverted(true);
+
 
     }
 
     public void drive(double ySpeed, double xSpeed, double zRotation){
         m_drive.driveCartesian(ySpeed, xSpeed, zRotation);
+
+
     }
 
     public double getAverageEcoderPosition(){
@@ -60,6 +67,20 @@ public class Chassis extends SubsystemBase {
     public double getLeftRearEncoder(){
         return m_leftRearEncoder.getPosition();
     }
+    // public void setRightFrontEncoderInverted(){
+    //     m_rightFrontEncoder.setInverted(true);
+    // }
+
+    // public void setRightRearEncoderInverted(){
+    //     m_rightRearEncoder.setInverted(true);
+    // }
+    // public void setLeftFrontEncoderInverted(){
+    //     m_rightFrontEncoder.setInverted(false);
+    // }
+    // public void setLeftRearEncoderInverted(){
+    //     m_rightFrontEncoder.setInverted(true);
+    // }
+
 
     public void resetEncoders(){
         m_leftFrontEncoder.setPosition(0.0);

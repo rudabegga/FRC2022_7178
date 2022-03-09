@@ -12,17 +12,17 @@ public class DefaultDrive extends CommandBase {
     private final DoubleSupplier m_xSpeed;
     private final DoubleSupplier m_zSpeed;
     
-    public DefaultDrive(Chassis sybsystem, DoubleSupplier ySpeed, DoubleSupplier xSpeed, DoubleSupplier zSpeed){
+    public DefaultDrive(Chassis sybsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed){
         m_drive = sybsystem;
         m_ySpeed = ySpeed;
         m_xSpeed = xSpeed;
-        m_zSpeed = xSpeed;
+        m_zSpeed = zSpeed;
         addRequirements(m_drive);
     }
 
     @Override
     public void execute(){
-        m_drive.drive(m_ySpeed.getAsDouble(), m_xSpeed.getAsDouble(), m_zSpeed.getAsDouble());
+        m_drive.drive(m_xSpeed.getAsDouble(), m_ySpeed.getAsDouble(), m_zSpeed.getAsDouble());
     }
 
 }
