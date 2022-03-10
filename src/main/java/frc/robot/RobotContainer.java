@@ -7,10 +7,14 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.auto.AutonDoNothing;
+import frc.robot.commands.auto.AutonTaxiOnly;
+import frc.robot.commands.auto.AutonTaxiTwoBall;
 import frc.robot.commands.chassis.AutoAim;
 import frc.robot.commands.chassis.DefaultDrive;
-import frc.robot.commands.chassis.DriveDistance;
 import frc.robot.commands.indexer.AutoIndexer;
 import frc.robot.commands.indexer.StopIndexer;
 import frc.robot.commands.intake.StopIntake;
@@ -42,10 +46,10 @@ public class RobotContainer {
   private final Hang m_hangSubsystem = new Hang();
   private final LED m_ledSubsystem = new LED();
 
-  private final DriveDistance m_autoCommand = new DriveDistance(10,0.5,m_chassisSubsystem);
-
   XboxController m_driverController = new XboxController(OIConstants.kDriverPort);
   XboxController m_codriverController = new XboxController(OIConstants.kCoDriverPort);
+
+  SendableChooser<Command> m_autonChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,6 +60,14 @@ public class RobotContainer {
       () -> -m_driverController.getRightX(),
       () -> m_driverController.getRightY(),
       () -> m_driverController.getLeftY()));
+
+
+      m_autonChooser.addOption("AutonDoNothing",new AutonDoNothing());
+      m_autonChooser.addOption("AutonTaxiOnly",new AutonTaxiOnly(m_chassisSubsystem));
+      m_autonChooser.addOption("AutonTaxiTwoBall", new AutonTaxiTwoBall(m_chassisSubsystem,m_intakeSubsystem,m_indexerSubsystem,m_traverseSubsystem,m_shooterSubsystem));
+
+    Shuffleboard.getTab("Autonomous").add(m_autonChooser).withSize(2,1);
+
   }
 
   /**
@@ -73,13 +85,19 @@ public class RobotContainer {
     new JoystickButton(m_driverController,Button.kRightBumper.value)
     .whenPressed(
       new SequentialCommandGroup(
-        new InstantCommand(m_ledSubsystem::red,m_ledSubsystem),
+        new InstantCommand(m_ledSubsystem::setRed,m_ledSubsystem),
         new AutoAim(m_chassisSubsystem, m_visionSubsystem),
-        new InstantCommand(m_ledSubsystem::green,m_ledSubsystem)
+        new InstantCommand(m_ledSubsystem::setGreen,m_ledSubsystem)
       )
     )
     .whenReleased(
-      new InstantCommand(m_ledSubsystem::green,m_ledSubsystem)
+      new InstantCommand(m_ledSubsystem::setBlue,m_ledSubsystem)
+    );
+
+    // Left Bumper Button Auto AIM 
+    new JoystickButton(m_driverController,Button.kLeftBumper.value)
+    .whenPressed(
+        new InstantCommand(m_intakeSubsystem::intakeRetract,m_intakeSubsystem)
     );
 
     // A Button Left Hang Arm Up
@@ -118,6 +136,24 @@ public class RobotContainer {
       new InstantCommand(m_hangSubsystem::rightHangStop,m_hangSubsystem)
     );
 
+    // start Button Left Hang deploy
+    new JoystickButton(m_driverController,Button.kStart.value)
+    .whenPressed(
+        new InstantCommand(m_hangSubsystem::leftHangRetract,m_hangSubsystem)
+    )
+    .whenReleased(
+      new InstantCommand(m_hangSubsystem::leftHangDeploy,m_hangSubsystem)
+    );
+
+    // start Button Left Hang deploy
+    new JoystickButton(m_driverController,Button.kBack.value)
+    .whenPressed(
+        new InstantCommand(m_hangSubsystem::rightHangRetract,m_hangSubsystem)
+    )
+    .whenReleased(
+      new InstantCommand(m_hangSubsystem::rightHangDeploy,m_hangSubsystem)
+    );
+
     /**************************
      * Co Driver Button Commands *
     ***************************/
@@ -125,14 +161,14 @@ public class RobotContainer {
     new JoystickButton(m_codriverController, Button.kA.value)
     .whenPressed(
       new SequentialCommandGroup(
-        new InstantCommand(m_ledSubsystem::red,m_ledSubsystem),
+        new InstantCommand(m_ledSubsystem::setRed,m_ledSubsystem),
         new AutoIndexer(m_intakeSubsystem, m_indexerSubsystem, m_traverseSubsystem),
-        new InstantCommand(m_ledSubsystem::green,m_ledSubsystem)
+        new InstantCommand(m_ledSubsystem::setGreen,m_ledSubsystem)
       )
     )
     .whenReleased(
       new ParallelCommandGroup(
-        new InstantCommand(m_ledSubsystem::green,m_ledSubsystem),
+        new InstantCommand(m_ledSubsystem::setBlue,m_ledSubsystem),
         new StopIntake(m_intakeSubsystem),
         new StopTraverse(m_traverseSubsystem),
         new StopIndexer(m_indexerSubsystem)
@@ -143,14 +179,14 @@ public class RobotContainer {
     new JoystickButton(m_codriverController, Button.kX.value)
     .whenPressed(
       new SequentialCommandGroup(
-        new InstantCommand(m_ledSubsystem::red,m_ledSubsystem),
+        new InstantCommand(m_ledSubsystem::setRed,m_ledSubsystem),
         new AutoShooter(m_indexerSubsystem,m_shooterSubsystem),
-        new InstantCommand(m_ledSubsystem::green,m_ledSubsystem)
+        new InstantCommand(m_ledSubsystem::setGreen,m_ledSubsystem)
       )
     )
     .whenReleased(
       new ParallelCommandGroup(
-        new InstantCommand(m_ledSubsystem::blue,m_ledSubsystem),
+        new InstantCommand(m_ledSubsystem::setBlue,m_ledSubsystem),
         new StopIndexer(m_indexerSubsystem),
         new StopShooter(m_shooterSubsystem)
       )
@@ -160,6 +196,7 @@ public class RobotContainer {
     new JoystickButton(m_codriverController, Button.kY.value)
     .whenPressed(
       new ParallelCommandGroup(
+        new InstantCommand(m_ledSubsystem::setPurpleBlink,m_ledSubsystem),
         new InstantCommand(m_intakeSubsystem::intakeReverse,m_intakeSubsystem),
         new InstantCommand(m_traverseSubsystem::traverseReverse,m_traverseSubsystem),
         new InstantCommand(m_indexerSubsystem::indexerReverse,m_indexerSubsystem)
@@ -167,6 +204,7 @@ public class RobotContainer {
     )
     .whenReleased(
       new ParallelCommandGroup(
+        new InstantCommand(m_ledSubsystem::setBlue,m_ledSubsystem),
         new InstantCommand(m_intakeSubsystem::intakeOff,m_intakeSubsystem),
         new InstantCommand(m_traverseSubsystem::traverseOff,m_traverseSubsystem),
         new InstantCommand(m_indexerSubsystem::indexerOff,m_indexerSubsystem)
@@ -177,6 +215,7 @@ public class RobotContainer {
     new JoystickButton(m_codriverController, Button.kB.value)
     .whenPressed(
       new ParallelCommandGroup(
+        new InstantCommand(m_ledSubsystem::setPurple,m_ledSubsystem),
         new InstantCommand(m_intakeSubsystem::intakeOn,m_intakeSubsystem),
         new InstantCommand(m_traverseSubsystem::traverseOn,m_traverseSubsystem),
         new InstantCommand(m_indexerSubsystem::indexerOn,m_indexerSubsystem)
@@ -184,6 +223,7 @@ public class RobotContainer {
     )
     .whenReleased(
       new ParallelCommandGroup(
+        new InstantCommand(m_ledSubsystem::setBlue,m_ledSubsystem),
         new InstantCommand(m_intakeSubsystem::intakeOff,m_intakeSubsystem),
         new InstantCommand(m_traverseSubsystem::traverseOff,m_traverseSubsystem),
         new InstantCommand(m_indexerSubsystem::indexerOff,m_indexerSubsystem)
@@ -201,6 +241,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autonChooser.getSelected();
   }
 }

@@ -30,6 +30,7 @@ public class AutoIndexer extends CommandBase {
 
     @Override
     public void initialize(){
+        m_intakeSubsystem.intakeDeploy();
         // first we need to determine what state to start at.
         if(!m_indexerSubsystem.getIndexerSensor() && !m_traverseSubsystem.getTraverseSensor()){
             // if both sensors detect then we are full

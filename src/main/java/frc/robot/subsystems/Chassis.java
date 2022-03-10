@@ -51,6 +51,10 @@ public class Chassis extends SubsystemBase {
 
     }
 
+    public double getAverageEncoderDistanceInches(){
+        return ChassisConstants.kEncoderConversionFactor * (m_leftFrontEncoder.getPosition()+m_rightFrontEncoder.getPosition())/2;
+    }
+
     public double getAverageEcoderPosition(){
         return(m_leftFrontEncoder.getPosition() + ((-1.0)*m_rightFrontEncoder.getPosition())) / 2.0;
     }

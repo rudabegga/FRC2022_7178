@@ -7,7 +7,8 @@ public class DriveDistance extends CommandBase{
     private final Chassis m_drive;
     private double m_distance;
     private double m_speed;
-    private double m_target;
+    private double start_encoders;
+    private boolean m_complete = false;
     
     public DriveDistance(double inches, double speed, Chassis subsystem){
         m_distance = inches;
@@ -18,7 +19,8 @@ public class DriveDistance extends CommandBase{
 
     @Override
     public void initialize(){
-        m_target = m_distance + m_drive.getLeftFrontEncoder();
+        m_complete = false;
+        start_encoders = m_drive.getAverageEncoderDistanceInches();
     }
 
     @Override
@@ -27,30 +29,17 @@ public class DriveDistance extends CommandBase{
     }
 
     @Override
-    public boolean isFinished(){
-        if(m_distance > 0){ // assume a forward target
-            if(m_drive.getLeftFrontEncoder() < m_target){
-                if(m_speed < 0){
-                    m_speed *=(-1.0); // if they put in a negative speed it will never get there so negate it
-                }
-                m_drive.drive(m_speed,0.0,0.0);
-                return false;
-            }else{
-                return true;
-            }
-        }else if(m_distance < 0){ // assume a reverse target
-            if(m_drive.getLeftFrontEncoder() > m_target){
-                if(m_speed > 0){
-                    m_speed *=(-1.0); // if they put in a positive speed it will never get there so negate it
-                }
-                m_drive.drive(m_speed,0.0,0.0);
-                return false;
-            }else{
-                return true;
-            }
-        }else{
+    public void execute(){
+        if(Math.abs(m_drive.getAverageEcoderPosition()-start_encoders)>=m_distance){
             m_drive.drive(0.0,0.0,0.0);
-            return true;
+            m_complete = true;
+        }else{
+            m_drive.drive(0.0,0.0,m_speed);
         }
+    }
+
+    @Override
+    public boolean isFinished(){
+        return m_complete;
     }
 }

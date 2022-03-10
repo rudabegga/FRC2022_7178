@@ -16,6 +16,7 @@ public final class Constants {
         public static final int kCurrentLimit = 40; // 40A current limit for motors eventhough it could be higher but not higher than 50A as the rating is 40A @80%
 
         public static final double kAutoRotationSpeed = 0.2; // speed to rotate for auto aim
+        public static final double kEncoderConversionFactor = 6 * Math.PI / 9.52;
     }
 
     public static final class IntakeConstants{
@@ -52,11 +53,11 @@ public final class Constants {
     }
 
     public static final class HangConstants{
-        public static final int kLeftHangMotorPort = 15;
         public static final int kRightHangMotorPort = 16;
-        public static final double kHangMotorSpeed = 1.0;
-        public static final int kLeftDeployPort = 1;
-        public static final int kRightDeployPort = 2;
+        public static final int kLeftHangMotorPort = 15;
+        public static final double kHangMotorSpeed = .5;
+        public static final int kLeftDeployPort = 2;
+        public static final int kRightDeployPort = 1;
         public static final int kCurrentLimit = 40; // 40A current limit for motors eventhough it could be higher but not higher than 50A as the rating is 40A @80%
     }
 
